@@ -5,9 +5,9 @@ const App = () => {
   return (
     <div>
       <h2>Link to 'tomato' Page</h2>
-      <a href="/tomato">
+      <Link href="/tomato">
         <p>Move to '/tomato'</p>
-      </a>
+      </Link>
     </div>
   );
 };
