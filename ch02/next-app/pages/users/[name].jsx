@@ -1,5 +1,6 @@
 import css from "styled-jsx/css";
 import fetch from "isomorphic-unfetch";
+import { GoOrganization, GoLink, GoMail, GoLocation } from "react-icons/go";
 
 const style = css`
   .profile-box {
@@ -24,14 +25,18 @@ const style = css`
     marign: 0;
     font-size: 20px;
   }
-  .profile-user-login {
-    margin: 0;
-    font-size: 20px;
-  }
   .profile-user-bio {
     margin: 0;
     padding-top: 16px;
     font-size: 14px;
+  }
+  .profile-user-info {
+    display: flex;
+    align-items: center;
+    margin: 4px 0 0;
+  }
+  .profile-user-info-text {
+    margin-left: 6px;
   }
 `;
 
@@ -52,6 +57,22 @@ const name = ({ user }) => {
         <h2 className="profile-username">{user.name}</h2>
         <p className="profile-user-login">{user.login}</p>
         <p className="profile-user-bio">{user.bio}</p>
+        <p className="profile-user-info">
+          <GoOrganization size={16} color="#6a737d" />
+          <span className="profile-user-info-text">{user.company}</span>
+        </p>
+        <p className="profile-user-info">
+          <GoLocation size={16} color="#6a737d" />
+          <span className="profile-user-info-text">{user.location}</span>
+        </p>
+        <p className="profile-user-info">
+          <GoMail size={16} color="#6a737d" />
+          <span className="profile-user-info-text">{user.email}</span>
+        </p>
+        <p className="profile-user-info">
+          <GoLink size={16} color="#6a737d" />
+          <span className="profile-user-info-text">{user.blog}</span>
+        </p>
       </div>
       <style jsx>{style}</style>
     </>
