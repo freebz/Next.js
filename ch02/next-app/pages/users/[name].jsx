@@ -1,5 +1,6 @@
 import css from "styled-jsx/css";
 import fetch from "isomorphic-unfetch";
+import formatDistance from "date-fns/formatDistance";
 import Profile from "../../components/Profile";
 
 const style = css`
@@ -86,7 +87,11 @@ const name = ({ user, repos }) => {
               <p className="repository-description">{repo.description}</p>
               <p className="repository-language">
                 {repo.language}
-                <span className="repository-updated-at">{repo.updated_at}</span>
+                <span className="repository-updated-at">
+                  {formatDistance(new Date(repo.updated_at), new Date(), {
+                    addSuffix: true,
+                  })}
+                </span>
               </p>
             </div>
           ))}
