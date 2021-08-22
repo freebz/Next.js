@@ -1,11 +1,6 @@
-import { useEffect } from "react";
 import Header from "../components/Header";
 
 const MyApp = ({ Component, pageProps }) => {
-  useEffect(() => {
-    throw Error();
-  }, []);
-
   return (
     <>
       <Header />
