@@ -6,7 +6,7 @@ const Container = styled.div`
 `;
 
 const index: NextPage = () => {
-  return <Container>hello Styled-component</Container>;
+  return <Container>hello Styled-components</Container>;
 };
 
 export default index;
