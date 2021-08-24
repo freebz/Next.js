@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import styled from "styled-components";
 import palette from "../styles/palette";
 import { TodoType } from "../types/todo";
@@ -25,7 +25,7 @@ interface IProps {
 
 const TodoList: React.FC<IProps> = ({ todos }) => {
   //* 색깔 객체 구하기 1
-  const getTodoColorNums = () => {
+  const getTodoColorNums = useCallback(() => {
     let red = 0;
     let orange = 0;
     let yellow = 0;
@@ -65,8 +65,10 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
       blue,
       navy,
     };
-  };
-  console.log(getTodoColorNums());
+  }, [todos]);
+
+  //* 색상별 투두 개수
+  const todoColorNums = useMemo(getTodoColorNums, [todos]);
 
   return (
     <Container>
