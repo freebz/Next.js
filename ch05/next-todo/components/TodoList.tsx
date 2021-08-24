@@ -33,25 +33,30 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
     let blue = 0;
     let navy = 0;
     todos.forEach((todo) => {
-      if (todo.color === "red") {
-        red += 1;
-      }
-      if (todo.color === "orange") {
-        orange += 1;
-      }
-      if (todo.color === "yellow") {
-        yellow += 1;
-      }
-      if (todo.color === "green") {
-        green += 1;
-      }
-      if (todo.color === "blue") {
-        blue += 1;
-      }
-      if (todo.color === "navy") {
-        navy += 1;
+      switch (todo.color) {
+        case "red":
+          red += 1;
+          break;
+        case "orange":
+          orange += 1;
+          break;
+        case "yellow":
+          yellow += 1;
+          break;
+        case "green":
+          green += 1;
+          break;
+        case "blue":
+          blue += 1;
+          break;
+        case "navy":
+          navy += 1;
+          break;
+        default:
+          break;
       }
     });
+
     return {
       red,
       orange,
