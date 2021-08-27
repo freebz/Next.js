@@ -70,6 +70,28 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
   //* 색상별 투두 개수
   const todoColorNums = useMemo(getTodoColorNums, [todos]);
 
+  //* 객체의 문자열 인덱스 사용을 위한 타입
+  type ObjectIndexType = {
+    [key: string]: number | undefined;
+  };
+
+  //* 색깔 객체 구하기 2
+  const todoColorNums2 = useMemo(() => {
+    const colors: ObjectIndexTyhpe = {};
+    todos.forEach((todo) => {
+      const value = colors[todo.color];
+      if (!value) {
+        //* 존재하지 않던 key라면
+        colors[`${todo.color}`] = 1;
+      } else {
+        //* 존재하는 키라면
+        colors[`${todo.color}`] = value + 1;
+      }
+    });
+    return colors;
+  }, [todos]);
+  console.log(todoColorNums2);
+
   return (
     <Container>
       <div className="todo-list-header">
