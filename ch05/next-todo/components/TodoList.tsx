@@ -88,6 +88,20 @@ const Container = styled.div`
           font-size: 16px;
         }
       }
+
+      .todo-right-side {
+        display: flex;
+        margin-right: 12px;
+
+        .todo-button {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: 1px solid ${palette.gray};
+          background-color: transparent;
+          outline: none;
+        }
+      }
     }
   }
 `;
@@ -190,6 +204,15 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
               >
                 {todo.text}
               </p>
+            </div>
+            <div className="todo-right-side">
+              {!todo.checked && (
+                <button
+                  type="button"
+                  className="todo-button"
+                  onClick={() => { }}
+                />
+              )}
             </div>
           </li>
         ))}
