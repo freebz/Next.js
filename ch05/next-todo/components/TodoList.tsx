@@ -32,7 +32,7 @@ const Container = styled.div`
           font-size: 14px;
           line-height: 16px;
           margin: 0;
-          maring-left: 6px;
+          margin-left: 6px;
         }
         .todo-list-header-round-color {
           width: 16px;
@@ -59,6 +59,36 @@ const Container = styled.div`
   }
   .bg-yellow {
     background-color: ${palette.yellow};
+  }
+
+  .todo-list {
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 52px;
+      border-bottom: 1px solid ${palette.gray};
+
+      .todo-left-side {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .todo-color-block {
+          width: 12px;
+          height: 100%;
+        }
+        .checked-todo-text {
+          color: ${palette.gray}
+          text-decoration: line-through;
+        }
+        .todo-text {
+          margin-left: 12px;
+          font-size: 16px;
+        }
+      }
+    }
   }
 `;
 
@@ -150,6 +180,20 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
           ))}
         </div>
       </div>
+      <ul className="todo-list">
+        {todos.map((todo) => (
+          <li className="todo-item" key={todo.id}>
+            <div className="todo-left-side">
+              <div className={`todo-color-block bg-${todo.color}`} />
+              <p
+                className={`todo-text ${todo.checked ? "checked-todo-text" : ""}`}
+              >
+                {todo.text}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </Container>
   );
 };
