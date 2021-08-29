@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/dist/client/router";
 import palette from "../styles/palette";
 import { TodoType } from "../types/todo";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
@@ -195,11 +196,14 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
   }, [todos]);
   console.log(todoColorNums2);
 
+  const router = useRouter();
   //* 투두 체크하기
   const checkTodo = async (id: number) => {
     try {
       await checkTodoAPI(id);
       console.log("체크하였습니다.");
+      //* 체크를 적용하는 방법 1(데이터 다시 받기)
+      router.reload();
     } catch (e) {
       console.log(e);
     }
