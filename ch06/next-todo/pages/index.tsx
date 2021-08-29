@@ -14,11 +14,13 @@ const todos: TodoType[] = [
 ];
 
 const app: NextPage = () => {
+  console.log(process.env, "클라이언트");
   return <TodoList todos={todos} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
+    console.log(process.env, "서버");
     const { data } = await getTodosAPI();
     console.log(data);
     return { props: {} };
