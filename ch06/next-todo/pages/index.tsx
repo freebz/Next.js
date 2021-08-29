@@ -14,7 +14,7 @@ const todos: TodoType[] = [
 ];
 
 const app: NextPage = () => {
-  console.log(process.env, "클라이언트");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "클라이언트");
   return <TodoList todos={todos} />;
 };
 
