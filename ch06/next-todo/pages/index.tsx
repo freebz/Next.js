@@ -1,8 +1,8 @@
-import Axios from "axios";
 import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import TodoList from "../components/TodoList";
 import { TodoType } from "../types/todo";
+import { getTodosAPI } from "../lib/api/todo";
 
 const todos: TodoType[] = [
   { id: 1, text: "마트 가서 장보기", color: "red", checked: false },
@@ -19,9 +19,7 @@ const app: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const { data } = await Axios.get<TodoType[]>(
-      "http://localhost:3000/api/todos"
-    );
+    const { data } = await getTodosAPI();
     console.log(data);
     return { props: {} };
   } catch (e) {
