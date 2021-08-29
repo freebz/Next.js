@@ -19,8 +19,10 @@ const app: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await Axios.get("http://localhost:3000/api/todos");
-    console.log(res);
+    const { data } = await Axios.get<TodoType[]>(
+      "http://localhost:3000/api/todos"
+    );
+    console.log(data);
     return { props: {} };
   } catch (e) {
     console.log(e);
