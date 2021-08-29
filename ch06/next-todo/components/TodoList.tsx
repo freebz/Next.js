@@ -203,7 +203,10 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
       await checkTodoAPI(id);
       console.log("체크하였습니다.");
       //* 체크를 적용하는 방법 1(데이터 다시 받기)
-      router.reload();
+      // router.reload();
+
+      //* 체크를 적용하는 방법 2(데이터 다시 받기)
+      router.push("/");
     } catch (e) {
       console.log(e);
     }
