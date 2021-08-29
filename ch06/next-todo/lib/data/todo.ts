@@ -12,4 +12,11 @@ const getList = () => {
   return todos;
 };
 
-export default {getList };
+//* id의 투두가 있는지 확인하기
+const exist = ({ id }: { id: number }) => {
+  const todos = getList();
+  const todo = todos.some((todo) => todo.id === id);
+  return todo;
+};
+
+export default { getList, exist };
