@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BrushIcon from "../public/statics/svg/brush.svg";
 import palette from "../styles/palette";
+import { TodoType } from "../types/todo";
 
 const Container = styled.div`
   padding: 16px;
@@ -75,10 +76,29 @@ const Container = styled.div`
     padding: 12px;
     font-size: 16px;
   }
+
+  .add-todo-color-list {
+    display: flex;
+    button {
+      width: 24px;
+      height: 24px;
+      margin-right: 16px;
+      border: 0;
+      outline: 0;
+      border-radius: 50%50%;
+      &:last-child {
+        margin: 0;
+      }
+    }
+    .add-todo-selected-color {
+      border: 2px solid black !important;
+    }
+  }
 `;
 
 const AddTodo: React.FC = () => {
   const [text, setText] = useState("");
+  const [selectedColor, setSelectedColor] = useState<TodoType["color"]>();
 
   return (
     <Container>
@@ -100,8 +120,10 @@ const AddTodo: React.FC = () => {
               <button
                 key={index}
                 type="button"
-                className={`bg-${color} add-todo-color-button`}
-                onClick={() => {}}
+                className={`bg-${color} add-todo-color-button ${
+                  color === selectedColor ? "add-todo-selected-color" : ""
+                }`}
+                onClick={() => setSelectedColor(color as TodoType["color"])}
               />
             )
           )}
@@ -113,7 +135,7 @@ const AddTodo: React.FC = () => {
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
         placeholder="할 일을 입력해주세요."
-      />
+      />"
     </Container>
   );
 };
