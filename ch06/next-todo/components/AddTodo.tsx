@@ -4,6 +4,7 @@ import BrushIcon from "../public/statics/svg/brush.svg";
 import palette from "../styles/palette";
 import { TodoType } from "../types/todo";
 import { addTodoAPI } from "../lib/api/todo";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   padding: 16px;
@@ -100,6 +101,7 @@ const Container = styled.div`
 const AddTodo: React.FC = () => {
   const [text, setText] = useState("");
   const [selectedColor, setSelectedColor] = useState<TodoType["color"]>();
+  const router = useRouter();
 
   //* 투두 추가하기
   const addTodo = async () => {
@@ -110,6 +112,7 @@ const AddTodo: React.FC = () => {
       }
       await addTodoAPI({ text, color: selectedColor });
       console.log("추가했습니다.");
+      router.push("/");
     } catch (e) {
       console.log(e);
     }
