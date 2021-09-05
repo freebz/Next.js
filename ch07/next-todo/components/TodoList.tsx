@@ -1,11 +1,13 @@
 import React, { useMemo, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
+import { useDispatch } from "react-redux";
 import palette from "../styles/palette";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
 import CheckMarkIcon from "../public/statics/svg/check_mark.svg";
 import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
 import { useSelector } from "../store";
+import { todoActions } from "../store/todo";
 
 const Container = styled.div`
   width: 100%;
@@ -126,6 +128,7 @@ const Container = styled.div`
 const TodoList: React.FC = () => {
   const todos = useSelector((state) => state.todo.todos);
   const [localTodos, setLocalTodos] = useState(todos);
+  const dispatch = useDispatch();
 
   //* 색깔 객체 구하기 1
   const getTodoColorNums = useCallback(() => {
@@ -215,7 +218,8 @@ const TodoList: React.FC = () => {
         }
         return todo;
       });
-      setLocalTodos(newTodos);
+      dispatch(todoActions.setTodo(newTodos));
+      console.log("체크하였습니다.");
     } catch (e) {
       console.log(e);
     }
@@ -226,7 +230,7 @@ const TodoList: React.FC = () => {
     try {
       await deleteTodoAPI(id);
       const newTodos = localTodos.filter((todo) => todo.id !== id);
-      setLocalTodos(newTodos);
+      dispatch(todoActions.setTodo(newTodos));
       console.log("삭제했습니다.");
     } catch (e) {
       console.log(e);
