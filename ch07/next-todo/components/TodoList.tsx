@@ -1,8 +1,9 @@
-import React, { useMemo, useCallback, useState } from "react";
+import { useMemo, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import palette from "../styles/palette";
-import { TodoType } from "../types/todo";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
 import CheckMarkIcon from "../public/statics/svg/check_mark.svg";
 import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
@@ -123,11 +124,8 @@ const Container = styled.div`
   }
 `;
 
-interface IProps {
-  todos: TodoType[];
-}
-
-const TodoList: React.FC<IProps> = ({ todos }) => {
+const TodoList: React.FC = () => {
+  const todos = useSelector((state: RootState) => state.todo.todos);
   const [localTodos, setLocalTodos] = useState(todos);
 
   //* 색깔 객체 구하기 1
