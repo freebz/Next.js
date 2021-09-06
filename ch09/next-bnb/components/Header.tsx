@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import AirbnbLogoIcon from "../public/static/svg/logo/logo.svg";
 import AirbnbLogoTextIcon from "../public/static/svg/logo/logo_text.svg";
 
@@ -27,10 +28,12 @@ const Container = styled.div`
 const Header: React.FC = () => {
   return (
     <Container>
-      <div className="header-logo-wrapper">
-        <AirbnbLogoIcon className="header-logo" />
-        <AirbnbLogoTextIcon />
-      </div>
+      <Link href="/">
+        <a className="header-logo-wrapper">
+          <AirbnbLogoIcon className="header-logo" />
+          <AirbnbLogoTextIcon />
+        </a>
+      </Link>
     </Container>
   );
 };
