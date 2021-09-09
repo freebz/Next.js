@@ -4,6 +4,8 @@ import Link from "next/link";
 import AirbnbLogoIcon from "../public/static/svg/logo/logo.svg";
 import AirbnbLogoTextIcon from "../public/static/svg/logo/logo_text.svg";
 import palette from "../styles/palette";
+import ModalPortal from "./ModalPortal";
+import SignUpModal from "./auth/SignUpModal";
 
 const Container = styled.div`
   position: sticky;
@@ -104,14 +106,9 @@ const Header: React.FC = () => {
         </button>
       </div>
       {modalOpened && (
-        <div className="modal-wrapper">
-          <div
-            className="modal-background"
-            role="presentation"
-            onClick={() => setModalOpened(false)}
-          />
-          <div className="modal-contents" />
-        </div>
+        <ModalPortal>
+          <SignUpModal />
+        </ModalPortal>
       )}
     </Container>
   );
