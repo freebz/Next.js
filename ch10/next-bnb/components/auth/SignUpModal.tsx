@@ -24,6 +24,12 @@ const Container = styled.form`
     position: relative;
     margin-bottom: 16px;
   }
+
+  .sign-up-password-input-wrapper {
+    svg {
+      cursor: pointer;
+    }
+  }
 `;
 
 const SignUpModal: React.FC = () => {
@@ -31,6 +37,7 @@ const SignUpModal: React.FC = () => {
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
+  const [hidePassword, setHidePassword] = useState(true);
 
   //* 이메일 주소 변경 시
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +57,11 @@ const SignUpModal: React.FC = () => {
   //* 비밀번호 변경 시
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+  };
+
+  //* 비밀번호 숨김 토글하기
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
   };
 
   return (
@@ -84,8 +96,14 @@ const SignUpModal: React.FC = () => {
       <div className="input-wrapper">
         <Input
           placeholder="비밀번호 설정하기"
-          type="password"
-          icon={<OpenedEyeIcon />}
+          type={hidePassword ? "password" : "text"}
+          icon={
+            hidePassword ? (
+              <ClosedEyeIcon onClick={toggleHidePassword} />
+            ) : (
+              <OpenedEyeIcon onClick={toggleHidePassword} />
+            )
+          }
           value={password}
           onChange={onChangePassword}
         />
