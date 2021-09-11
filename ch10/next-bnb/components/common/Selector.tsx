@@ -36,6 +36,7 @@ const Selector: React.FC<IProps> = ({ options = [], ...props }) => {
   return (
     <Container>
       <select {...props}>
+        <option value="월" disabled>월</option>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}

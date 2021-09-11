@@ -128,7 +128,7 @@ const SignUpModal: React.FC = () => {
         만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
         에어비앤비 이용자에게 공개되지 않습니다.
       </p>
-      <Selector options={monthList} />
+      <Selector options={monthList} defaultValue="월" />
     </Container>
   );
 };
