@@ -70,6 +70,10 @@ const SignUpModal: React.FC = () => {
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
+  const [birthYear, setBirthYear] = useState<string | undefined>();
+  const [birthDay, setBirthDay] = useState<string | undefined>();
+  const [birthMonth, setBirthMonth] = useState<string | undefined>();
+
   //* 이메일 주소 변경 시
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -93,6 +97,21 @@ const SignUpModal: React.FC = () => {
   //* 비밀번호 숨김 토글하기
   const toggleHidePassword = () => {
     setHidePassword(!hidePassword);
+  };
+
+  //* 생년월일 월 변경 시
+  const onChangeBirthMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthMonth(event.target.value);
+  };
+
+  //* 생년월일 일 변경 시
+  const onChangeBirthDay = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthDay(event.target.value);
+  };
+
+  //* 생년월일 년 변경 시
+  const onChangeBirthYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthYear(event.target.value);
   };
 
   return (
@@ -150,6 +169,8 @@ const SignUpModal: React.FC = () => {
             options={monthList}
             disabledOptions={["월"]}
             defaultValue="월"
+            value={birthMonth}
+            onChange={onChangeBirthMonth}
           />
         </div>
         <div className="sign-up-modal-birthday-day-selector">
@@ -157,6 +178,8 @@ const SignUpModal: React.FC = () => {
             options={dayList}
             disabledOptions={["일"]}
             defaultValue="일"
+            value={birthDay}
+            onChange={onChangeBirthDay}
           />
         </div>
         <div className="sign-up-modal-birthday-year-selector">
@@ -164,6 +187,8 @@ const SignUpModal: React.FC = () => {
             options={yearList}
             disabledOptions={["년"]}
             defaultValue="년"
+            value={birthYear}
+            onChange={onChangeBirthYear}
           />
         </div>
       </div>
