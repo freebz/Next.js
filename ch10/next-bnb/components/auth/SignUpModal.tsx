@@ -50,7 +50,7 @@ const SignUpModal: React.FC = () => {
   };
 
   //* 성 변경 시
-  const onChangeFirstname = (event: React.ChangeEvent<HTMLElement>) => {
+  const onChangeFirstname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFirstname(event.target.value);
   };
 
