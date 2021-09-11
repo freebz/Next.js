@@ -8,7 +8,7 @@ import ClosedEyeIcon from "../../public/static/svg/auth/closed-eye.svg";
 import Input from "../common/Input";
 import Selector from "../common/Selector";
 import palette from "../../styles/palette";
-import { monthList } from "../../lib/staticData";
+import { dayList, monthList, yearList } from "../../lib/staticData";
 
 const Container = styled.form`
   width: 568px;
@@ -44,6 +44,22 @@ const Container = styled.form`
   .sign-up-modal-birthday-info {
     margin-bottom: 16px;
     color: ${palette.charcoal};
+  }
+
+  .sign-up-modal-birthday-selectors {
+    display: flex;
+    margin-bottom: 24px;
+    .sign-up-modal-birthday-month-selector {
+      margin-right: 16px;
+      flex-grow: 1;
+    }
+    .sign-up-modal-birthday-day-selector {
+      margin-right: 16px;
+      width: 25%;
+    }
+    .sign-up-modal-birthday-year-selector {
+      width: 33.3333%;
+    }
   }
 `;
 
@@ -128,11 +144,29 @@ const SignUpModal: React.FC = () => {
         만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
         에어비앤비 이용자에게 공개되지 않습니다.
       </p>
-      <Selector
-        options={monthList}
-        disabledOptions={["월"]}
-        defaultValue="월"
-      />
+      <div className="sign-up-modal-birthday-selectors">
+        <div className="sign-up-modal-birthday-month-selector">
+          <Selector
+            options={monthList}
+            disabledOptions={["월"]}
+            defaultValue="월"
+          />
+        </div>
+        <div className="sign-up-modal-birthday-day-selector">
+          <Selector
+            options={dayList}
+            disabledOptions={["일"]}
+            defaultValue="일"
+          />
+        </div>
+        <div className="sign-up-modal-birthday-year-selector">
+          <Selector
+            options={yearList}
+            disabledOptions={["년"]}
+            defaultValue="년"
+          />
+        </div>
+      </div>
     </Container>
   );
 };
