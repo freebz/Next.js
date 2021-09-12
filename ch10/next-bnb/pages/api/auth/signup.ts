@@ -42,6 +42,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
 
+    res.setHeader(
+      "Set-Cookie",
+      `access_token=${token}; path=/; expires=${new Date(
+        Date.now() + 60 * 60 * 24 * 1000 * 3 // 3일
+      ).toUTCString()}; httponly`
+    );
+
     return res.end();
   }
   res.statusCode = 405;
