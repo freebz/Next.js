@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import Data from "../../../lib/data";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Data from "../../../lib/data";
 import { StoredUserType } from "../../../types/user";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -38,6 +39,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     };
 
     Data.user.write([...users, newUser]);
+
+    const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
 
     return res.end();
   }
