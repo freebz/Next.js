@@ -43,7 +43,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap&subset=koread"
+            href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap&subset=korean"
             rel="stylesheet"
           />
         </Head>
