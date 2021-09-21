@@ -11,6 +11,8 @@ import { useSelector } from "../store";
 import HamburgerIcon from "../public/static/svg/header/hamburger.svg";
 import { authActions } from "../store/auth";
 import AuthModal from "./auth/AuthModal";
+import { logoutAPI } from "../lib/api/auth";
+import { userActions } from "../store/user";
 
 const Container = styled.div`
   position: sticky;
@@ -150,6 +152,16 @@ const Header: React.FC = () => {
   //* 유저 메뉴 열고,닫힘 여부
   const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
 
+  //* 로그아웃 하기
+  const logout = async () => {
+    try {
+      await logoutAPI();
+      dispatch(userActions.initUser());
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <Container>
       <Link href="/">
@@ -216,7 +228,7 @@ const Header: React.FC = () => {
                 </a>
               </Link>
               <div className="header-usermenu-divider" />
-              <li role="presentation" onClick={() => {}}>
+              <li role="presentation" onClick={logout}>
                 로그아웃
               </li>
             </ul>
