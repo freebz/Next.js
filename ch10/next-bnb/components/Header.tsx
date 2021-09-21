@@ -13,6 +13,7 @@ import { authActions } from "../store/auth";
 import AuthModal from "./auth/AuthModal";
 import { logoutAPI } from "../lib/api/auth";
 import { userActions } from "../store/user";
+import HeaderAuths from "./HeaderAuths";
 
 const Container = styled.div`
   position: sticky;
@@ -170,30 +171,7 @@ const Header: React.FC = () => {
           <AirbnbLogoTextIcon />
         </a>
       </Link>
-      {!user.isLogged && (
-        <div className="header-auth-buttons">
-          <button
-            type="button"
-            className="header-sign-up-button"
-            onClick={() => {
-              dispatch(authActions.setAuthMode("signup"));
-              openModal();
-            }}
-          >
-            회원가입
-          </button>
-          <button
-            className="header-login-button"
-            type="button"
-            onClick={() => {
-              dispatch(authActions.setAuthMode("login"));
-              openModal();
-            }}
-          >
-            로그인
-          </button>
-        </div>
-      )}
+      {!user.isLogged && <HeaderAuths />}
       {user.isLogged && (
         <OutsideClickHandler
           onOutsideClick={() => {
