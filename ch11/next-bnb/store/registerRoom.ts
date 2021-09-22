@@ -22,7 +22,16 @@ const initialState: RegisterRoomState = {
 const registerRoom = createSlice({
   name: "registerRoom",
   initialState,
-  reducers: {},
+  reducers: {
+    //* 큰 건물 유형 변경하기
+    setLargeBuildingType(state, action: Payload<string>) {
+      if (action.payload === "") {
+        state.largeBuildingType = null;
+      }
+      state.largeBuildingType = action.payload;
+      return state;
+    },
+  },
 });
 
 export const registerRoomActions = { ...registerRoom.actions };
