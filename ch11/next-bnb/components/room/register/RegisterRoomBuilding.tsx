@@ -97,6 +97,15 @@ const RegisterRoomBuilding: React.FC = () => {
     }
   }, [largeBuildingType]);
 
+  const buildingType = useSelector((state) => state.registerRoom.buildingType);
+
+  //* 상세 건물 유형 변경 시
+  const onChangeBuildingType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    dispatch(registerRoomActions.setBuildingType(event.target.value));
+  };
+
   return (
     <Container>
       <h2>등록할 숙소 종류는 무엇인가요?</h2>
@@ -115,7 +124,8 @@ const RegisterRoomBuilding: React.FC = () => {
       <div className="register-room-building-selector-wrapper">
         <Selector
           type="register"
-          value={undefined}
+          value={buildingType || undefined}
+          onChange={onChangeBuildingType}
           disabled={!largeBuildingType}
           label="건물 유형을 선택하세요."
           options={detailBuildingOptions}
