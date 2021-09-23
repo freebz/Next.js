@@ -134,6 +134,18 @@ const RegisterRoomBuilding: React.FC = () => {
     dispatch(registerRoomActions.setBuildingType(event.target.value));
   };
 
+  const roomType = useSelector((state) => state.registerRoom.roomType);
+
+  //* 숙소 유형 변경시
+  const onChangeRoomType = (value: any) => {
+    const selected = value;
+    dispatch(
+      registerRoomActions.setRoomType(
+        selected as "entire" | "private" | "public"
+      )
+    );
+  };
+
   return (
     <Container>
       <h2>등록할 숙소 종류는 무엇인가요?</h2>
@@ -164,8 +176,9 @@ const RegisterRoomBuilding: React.FC = () => {
         <div className="register-room-room-type-radio">
           <RadioGroup
             label="게스트가 묵게 될 숙소 유형을 골라주세요."
-            value={undefined}
+            value={roomType}
             options={roomTypeRadioOptions}
+            onChange={onChangeRoomType}
           />
         </div>
       )}

@@ -39,6 +39,11 @@ const registerRoom = createSlice({
       state.buildingType = action.payload;
       return state;
     },
+    //* 숙소 유형 변경하기
+    setRoomType(state, action: PayloadAction<"entire" | "private" | "public">) {
+      state.roomType = action.payload;
+      return state;
+    },
   },
 });
 
