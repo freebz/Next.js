@@ -43,7 +43,7 @@ const Container = styled.div<{ isValid: boolean; validateMode: boolean }>`
     font-size: 16px;
     -webkit-appearance: none;
     border: 1px solid ${palette.gray_b0};
-    border-radius: 50%50%;
+    border-radius: 50%;
     outline: none;
     cursor: pointer;
 
@@ -64,6 +64,10 @@ const Container = styled.div<{ isValid: boolean; validateMode: boolean }>`
   }
 
   input[type="radio"]:checked {
+    background-color: ${palette.dark_cyan};
+    border: 0;
+  }
+  input[type="radio"]:checked:after {
     content: "";
     width: 6px;
     height: 6px;
