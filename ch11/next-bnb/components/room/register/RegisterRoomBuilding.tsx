@@ -30,6 +30,10 @@ const Container = styled.div`
     max-width: 485px;
     margin-bottom: 50px;
   }
+
+  .register-room-is-sutup-guest-radio {
+    margin-bottom: 50px;
+  }
 `;
 
 //* 선택 불가능한 큰 범위 건물 유형
@@ -57,11 +61,25 @@ const roomTypeRadioOptions = [
   },
 ];
 
+//* 게스트만 사용하도록 만들어진 숙소인지 라디오 options
+const isSetUpForGuestOptions = [
+  {
+    label: "예, 게스트용으로 따로 마련된 숙소입니다.",
+    value: true,
+  },
+  {
+    label: "아니오, 제 개인 물건이 숙소에 있습니다.",
+    value: false,
+  }
+];
+
 const RegisterRoomBuilding: React.FC = () => {
   const largeBuildingType = useSelector(
     (state) => state.registerRoom.largeBuildingType
   );
-
+  const buildingType = useSelector((state) => state.registerRoom.buildingType);
+  const roomType = useSelector((state) => state.registerRoom.roomType);
+  const isSetUpForGuest = useSelector((state) => state.registerRoom.isSetUpForGuest);
   const dispatch = useDispatch();
 
   //* 큰 범위 건물 유형 변경 시
@@ -125,16 +143,12 @@ const RegisterRoomBuilding: React.FC = () => {
     }
   }, [largeBuildingType]);
 
-  const buildingType = useSelector((state) => state.registerRoom.buildingType);
-
   //* 상세 건물 유형 변경 시
   const onChangeBuildingType = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     dispatch(registerRoomActions.setBuildingType(event.target.value));
   };
-
-  const roomType = useSelector((state) => state.registerRoom.roomType);
 
   //* 숙소 유형 변경시
   const onChangeRoomType = (value: any) => {
@@ -144,6 +158,11 @@ const RegisterRoomBuilding: React.FC = () => {
         selected as "entire" | "private" | "public"
       )
     );
+  };
+
+  //* 게스트용 숙소인지 변경 시
+  const onChangeIsSetUpForGuest = (value: any) => {
+    dispatch(registerRoomActions.setIsSetUpForGuest(value));
   };
 
   return (
@@ -182,6 +201,15 @@ const RegisterRoomBuilding: React.FC = () => {
           />
         </div>
       )}
+
+      <div className="register-room-is-setup-for-guest-radio">
+        <RadioGroup
+          label="게스트만 사용하도록 만들어진 숙소인가요?"
+          value={isSetUpForGuest}
+          onChange={onChangeIsSetUpForGuest}
+          options={isSetUpForGuestOptions}
+        />
+      </div>
     </Container>
   );
 };
