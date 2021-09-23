@@ -7,6 +7,7 @@ import { largeBuildingTypeList } from "../../../lib/staticData";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import RadioGroup from "../../common/RadioGroup";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -210,6 +211,12 @@ const RegisterRoomBuilding: React.FC = () => {
           options={isSetUpForGuestOptions}
         />
       </div>
+
+      <RegisterRoomFooter
+        isValid={false}
+        prevHref="/"
+        nextHref="/room/register/bedrooms"
+      />
     </Container>
   );
 };
