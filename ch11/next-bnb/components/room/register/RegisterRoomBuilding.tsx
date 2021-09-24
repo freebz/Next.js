@@ -166,6 +166,14 @@ const RegisterRoomBuilding: React.FC = () => {
     dispatch(registerRoomActions.setIsSetUpForGuest(value));
   };
 
+  //* 모든 값이 있는지 확인하기
+  const isValid = useMemo(() => {
+    if (!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest === null) {
+      return false;
+    }
+    return true;
+  }, [largeBuildingType, buildingType, roomType, isSetUpForGuest]);
+
   return (
     <Container>
       <h2>등록할 숙소 종류는 무엇인가요?</h2>
@@ -176,6 +184,7 @@ const RegisterRoomBuilding: React.FC = () => {
           value={largeBuildingType || undefined}
           defaultValue="하나를 선택해주세요."
           disabledOptions={disabledlargeBuildingTypeOptions}
+          isValid={!!largeBuildingType}
           label="우선 범위를 좁혀볼까요?"
           options={largeBuildingTypeList}
           onChange={onChangeLargeBuildingType}
@@ -187,6 +196,7 @@ const RegisterRoomBuilding: React.FC = () => {
           value={buildingType || undefined}
           onChange={onChangeBuildingType}
           disabled={!largeBuildingType}
+          isValid={!!buildingType}
           label="건물 유형을 선택하세요."
           options={detailBuildingOptions}
         />
@@ -195,6 +205,7 @@ const RegisterRoomBuilding: React.FC = () => {
       {buildingType && (
         <div className="register-room-room-type-radio">
           <RadioGroup
+            isValid={!!roomType}
             label="게스트가 묵게 될 숙소 유형을 골라주세요."
             value={roomType}
             options={roomTypeRadioOptions}
@@ -205,6 +216,7 @@ const RegisterRoomBuilding: React.FC = () => {
 
       <div className="register-room-is-setup-for-guest-radio">
         <RadioGroup
+          isValid={isSetUpForGuest !== null}
           label="게스트만 사용하도록 만들어진 숙소인가요?"
           value={isSetUpForGuest}
           onChange={onChangeIsSetUpForGuest}
@@ -213,7 +225,7 @@ const RegisterRoomBuilding: React.FC = () => {
       </div>
 
       <RegisterRoomFooter
-        isValid={false}
+        isValid={isValid}
         prevHref="/"
         nextHref="/room/register/bedrooms"
       />
