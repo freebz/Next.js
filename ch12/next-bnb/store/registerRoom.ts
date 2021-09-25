@@ -70,7 +70,14 @@ const registerRoom = createSlice({
     },
     //* 침실 개수 변경하기
     setBedroomCount(state, action: PayloadAction<number>) {
-      state.bedroomCount = action.payload;
+      const bedroomCount = action.payload;
+
+      state.bedroomCount = bedroomCount;
+      state.bedList = Array.from(Array(bedroomCount), (_, index) => ({
+        id: index + 1,
+        beds: [],
+      }));
+
       return state;
     },
     //* 침대 개수 변경하기
