@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
+import { bedTypes } from "../../../lib/staticData";
 import palette from "../../../styles/palette";
 import { BedType } from "../../../types/room";
 import Button from "../../common/Button";
@@ -46,6 +47,16 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
   //* 침실 유형 열고 닫기
   const toggleOpened = () => setOpened(!opened);
 
+  //* 선택된 침대 옵션들
+  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>([]);
+
+  //* 남은 침대 옵션들
+  const lastBedOptions = useMemo(() => {
+    return bedTypes.filter((bedType) => !activedBedOptions.includes(bedType));
+  }, [activedBedOptions, bedroom]);
+
+  console.log(activedBedOptions);
+
   return (
     <Container>
       <div className="register-room-bed-type-top">
@@ -65,9 +76,17 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
         <div className="register-room-bed-type-selector-wrapper">
           <Selector
             type="register"
+            options={lastBedOptions}
             defaultValue="다른 침대 추가"
             value="다른 침대 추가"
             disabledOptions={["다른 침대 추가"]}
+            useValidation={false}
+            onChange={(e) =>
+              setActivedBedOptions([
+                ...activedBedOptions,
+                e.target.value as BedType,
+              ])
+            }
           />
         </div>
       )}
