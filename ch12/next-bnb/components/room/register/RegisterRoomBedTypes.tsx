@@ -1,9 +1,12 @@
 import React, { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { bedTypes } from "../../../lib/staticData";
+import { registerRoomActions } from "../../../store/registerRoom";
 import palette from "../../../styles/palette";
 import { BedType } from "../../../types/room";
 import Button from "../../common/Button";
+import Counter from "../../common/Counter";
 import Selector from "../../common/Selector";
 
 const Container = styled.li`
@@ -25,6 +28,20 @@ const Container = styled.li`
   }
   .register-room-bed-type-selector-wrapper {
     width: 320px;
+  }
+
+  .register-room-bed-type-counters {
+    width: 320px;
+    margin-top: 28px;
+  }
+  .register-room-bed-type-counter {
+    width: 290px;
+    margin-bottom: 18px;
+  }
+
+  .register-room-bed-type-counter {
+    width: 290px;
+    margin-bottom: 18px;
   }
 `;
 
@@ -57,6 +74,18 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
 
   console.log(activedBedOptions);
 
+  const dispatch = useDispatch();
+
+  //* 침실 침대 개수 변경 시
+  const onChangeBedTypeCount = (value: number, type: BedType) =>
+    dispatch(
+      registerRoomActions.setBedTypeCount({
+        bedroomId: bedroom.id,
+        type,
+        count: value,
+      })
+    );
+
   return (
     <Container>
       <div className="register-room-bed-type-top">
@@ -74,6 +103,22 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
       </div>
       {opened && (
         <div className="register-room-bed-type-selector-wrapper">
+          <div className="register-room-bed-type-counters">
+            {activedBedOptions.map((type) => (
+              <div className="register-room-bed-type-counter" key={type}>
+                <Counter
+                  label={type}
+                  value={
+                    bedroom.beds.find((bed) => bed.type === type)?.count || 0
+                  }
+                  key={type}
+                  onChange={(value) => {
+                    onChangeBedTypeCount(value, type);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           <Selector
             type="register"
             options={lastBedOptions}
