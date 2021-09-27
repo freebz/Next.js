@@ -9,6 +9,7 @@ import { getNumber } from "../../../lib/utils";
 import { bedroomCountList } from "../../../lib/staticData";
 import palette from "../../../styles/palette";
 import Button from "../../common/Button";
+import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -141,25 +142,11 @@ const RegisterRoomBedrooms: React.FC = () => {
         잘 파악할 수 있습니다.
       </p>
 
-      <div className="register-room-bed-type-list-wrapper">
+      <ul className="register-room-bed-type-list-wrapper">
         {bedList.map((bedroom) => (
-          <div className="register-room-bedroom">
-            <div className="register-room-bed-type-top">
-              <div className="register-room-bed-type-bedroom-texts">
-                <p className="register-room-bed-type-bedroom">
-                  {bedroom.id}번 침실
-                </p>
-                <p className="register-room-bed-type-bedroom-counts">
-                  침대 0개
-                </p>
-              </div>
-              <Button styleType="register" color="white">
-                침대 추가하기
-              </Button>
-            </div>
-          </div>
+          <RegisterRoomBedTypes bedroom={bedroom} />
         ))}
-      </div>
+      </ul>
     </Container>
   );
 };
