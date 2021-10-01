@@ -5,6 +5,7 @@ import NavigationIcon from "../../../public/static/svg/register/navigation.svg";
 import Button from "../../common/Button";
 import Selector from "../../common/Selector";
 import { countryList } from "../../../lib/staticData";
+import Input from "../../common/Input";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -31,6 +32,25 @@ const Container = styled.div`
     width: 385px;
     margin-bottom: 24px;
   }
+  .register-room-location-city-district {
+    max-width: 385px;
+    display: flex;
+    margin-bottom: 24px;
+    > div:first-child {
+      margin-right: 24px;
+    }
+  }
+  .register-room-location-street-address {
+    max-width: 385px;
+    margin-bottom: 24px;
+  }
+  .register-room-location-detail-address {
+    max-width: 385px;
+    margin-bottom: 24px;
+  }
+  .register-room-location-postcode {
+    max-width: 385px;
+  }
 `;
 
 const RegisterLocation: React.FC = () => {
@@ -54,6 +74,19 @@ const RegisterLocation: React.FC = () => {
           defaultValue="국가/지역 선택"
           disabledOptions={["국가/지역 선택"]}
         />
+      </div>
+      <div className="register-room-location-city-district">
+        <Input label="시/도" />
+        <Input label="시/군/구" />
+      </div>
+      <div className="register-room-location-street-address">
+        <Input label="도로명주소" />
+      </div>
+      <div className="register-room-location-detail-address">
+        <Input label="동호수(선택 사항)" useValidation={false} />
+      </div>
+      <div className="register-room-location-postcode">
+        <Input label="우편번호" />
       </div>
     </Container>
   );
