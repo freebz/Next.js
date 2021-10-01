@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import palette from "../../../styles/palette";
+import NavigationIcon from "../../../public/static/svg/register/navigation.svg";
+import Button from "../../common/Button";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -19,6 +21,10 @@ const Container = styled.div`
     max-width: 400px;
     margin-bottom: 24px;
   }
+  .register-room-location-button-wrapper {
+    width: 176px;
+    margin-bottom: 24px;
+  }
 `;
 
 const RegisterLocation: React.FC = () => {
@@ -29,6 +35,11 @@ const RegisterLocation: React.FC = () => {
       <p className="register-room-step-info">
         정확한 숙소 주소는 게스트가 예약을 완료한 후에만 공개됩니다.
       </p>
+      <div className="register-room-location-button-wrapper">
+        <Button color="dark_cyan" colorReverse icon={<NavigationIcon />}>
+          현재 위치 사용
+        </Button>
+      </div>
     </Container>
   );
 };
