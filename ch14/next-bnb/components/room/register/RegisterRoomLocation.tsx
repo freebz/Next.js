@@ -10,6 +10,7 @@ import Input from "../../common/Input";
 import { registerRoomActions } from "../../../store/registerRoom";
 import { useSelector } from "../../../store";
 import { getLocationInfoAPI } from "../../../lib/api/map";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -186,6 +187,10 @@ const RegisterLocation: React.FC = () => {
       <div className="register-room-location-postcode">
         <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
       </div>
+      <RegisterRoomFooter
+        prevHref="/room/register/bathroom"
+        nextHref="/room/register/geometry"
+      />
     </Container>
   );
 };
