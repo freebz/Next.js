@@ -3,6 +3,8 @@ import styled from "styled-components";
 import palette from "../../../styles/palette";
 import NavigationIcon from "../../../public/static/svg/register/navigation.svg";
 import Button from "../../common/Button";
+import Selector from "../../common/Selector";
+import { countryList } from "../../../lib/staticData";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -25,6 +27,10 @@ const Container = styled.div`
     width: 176px;
     margin-bottom: 24px;
   }
+  .register-room-location-country-selector-wrapper {
+    width: 385px;
+    margin-bottom: 24px;
+  }
 `;
 
 const RegisterLocation: React.FC = () => {
@@ -39,6 +45,15 @@ const RegisterLocation: React.FC = () => {
         <Button color="dark_cyan" colorReverse icon={<NavigationIcon />}>
           현재 위치 사용
         </Button>
+      </div>
+      <div className="register-room-location-country-selector-wrapper">
+        <Selector
+          type="register"
+          options={countryList}
+          useValidation={false}
+          defaultValue="국가/지역 선택"
+          disabledOptions={["국가/지역 선택"]}
+        />
       </div>
     </Container>
   );
