@@ -9,6 +9,7 @@ import { countryList } from "../../../lib/staticData";
 import Input from "../../common/Input";
 import { registerRoomActions } from "../../../store/registerRoom";
 import { useSelector } from "../../../store";
+import { getLocationInfoAPI } from "../../../lib/api/map";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -103,9 +104,16 @@ const RegisterLocation: React.FC = () => {
   };
 
   //* 현재 위치 불러오기에 성공했을 때
-  const onSuccessGetLocation = ({ coords }: { coords: Goordinates }) => {
-    console.log("latitude", coords.latitude);
-    console.log("longitude", coords.longitude);
+  const onSuccessGetLocation = async ({ coords }: { coords: Coordinates }) => {
+    try {
+      await getLocationInfoAPI({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
+    } catch (e) {
+      console.log(e);
+      alert(e?.message);
+    }
   };
 
   //* 현재 위치 사용 클릭 시
