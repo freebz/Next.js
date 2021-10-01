@@ -106,10 +106,11 @@ const RegisterLocation: React.FC = () => {
   //* 현재 위치 불러오기에 성공했을 때
   const onSuccessGetLocation = async ({ coords }: { coords: Coordinates }) => {
     try {
-      await getLocationInfoAPI({
+      const { data } = await getLocationInfoAPI({
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
+      console.log(data);
     } catch (e) {
       console.log(e);
       alert(e?.message);
