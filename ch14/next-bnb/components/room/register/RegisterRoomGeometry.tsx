@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -114,6 +115,10 @@ const RegisterRoomGeometry: React.FC = () => {
         <div className="register-room-geometry-map-wrapper">
           <div ref={mapRef} id="map" />
         </div>
+        <RegisterRoomFooter
+          prevHref="/room/register/location"
+          nextHref="/room/register/amentities"
+        />
       </Container>
     </>
   );
