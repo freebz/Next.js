@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import throttle from "lodash/throttle";
+import { useDispatch } from "react-redux";
 import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
+import { registerRoomActions } from "../../../store/registerRoom";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -62,6 +65,8 @@ const RegisterRoomGeometry: React.FC = () => {
   const latitude = useSelector((state) => state.registerRoom.latitude);
   const longitude = useSelector((state) => state.registerRoom.longitude);
 
+  const dispatch = useDispatch();
+
   const loadMap = async () => {
     await loadMapScript();
   };
@@ -83,11 +88,16 @@ const RegisterRoomGeometry: React.FC = () => {
         },
         map,
       });
-      map.addListener("conter_changed", () => {
-        const centerLat = map.getCenter().lat();
-        const centerLng = map.getCenter().lng();
-        console.log(centerLat, centerLng);
-      });
+      map.addListener(
+        "conter_changed",
+        throttle(() => {
+          const centerLat = map.getCenter().lat();
+          const centerLng = map.getCenter().lng();
+          marker.setPosition({ lat: centerLat, lng: centerLng });
+          dispatch(registerRoomActions.setLatitude(centerLat));
+          dispatch(registerRoomActions.setLongitude(centerLng));
+        }, 150)
+      );
     }
   };
 
