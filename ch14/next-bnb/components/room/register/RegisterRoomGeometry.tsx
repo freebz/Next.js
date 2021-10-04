@@ -83,6 +83,11 @@ const RegisterRoomGeometry: React.FC = () => {
         },
         map,
       });
+      map.addListener("conter_changed", () => {
+        const centerLat = map.getCenter().lat();
+        const centerLng = map.getCenter().lng();
+        console.log(centerLat, centerLng);
+      });
     }
   };
 
