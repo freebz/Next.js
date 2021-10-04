@@ -24,6 +24,18 @@ const Container = styled.div`
       height: 100%;
     }
   }
+  /** 지도 위성 제거 */
+  .gmnoprint .gm-style-mtc {
+    display: none;
+  }
+  /** 로드뷰 아이콘 제거 */
+  .gm-svpc {
+    display: none;
+  }
+  /** 풀스크린 제거 */
+  .gm-fullscreen-control {
+    display: none;
+  }
 `;
 
 //* 구글 지도 script 불러오기
@@ -63,6 +75,13 @@ const RegisterRoomGeometry: React.FC = () => {
           lng: longitude || 126.9778436,
         },
         zoom: 14,
+      });
+      const marker = new window.google.maps.Marker({
+        position: {
+          lat: latitude || 37.5666784,
+          lng: longitude || 126.9778436,
+        },
+        map,
       });
     }
   };
