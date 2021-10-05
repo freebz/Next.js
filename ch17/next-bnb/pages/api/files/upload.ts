@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
+import aws from "aws-sdk";
+import { createReadStream } from "fs";
 
 export const config = {
   api: {
@@ -12,7 +14,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const form = new formidable.IncomingForm();
       form.parse(req, async (err, fields, files) => {
-        console.log(files);
+        const s3 = new aws.S3({
+          accessKeyId: process.env.ACCESSKEY_ID,
+          secretAccessKey: process.env.SECRET_ACCESSKEY_ID,
+        });
+
+        const stream = createReadStream(files.file.path);
+
+        await s3
+          .upload({
+            Bucket: process.env.S3_BUCKET_NAME!,
+            Key: files.file.name,
+            ACL: "public-read",
+            Body: stream,
+          })
+          .promise()
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
       });
     } catch (e) {
       console.log(e);
