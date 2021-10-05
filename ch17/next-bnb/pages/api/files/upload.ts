@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import aws from "aws-sdk";
+import { v4 as uuidv4 } from "uuid";
 import { createReadStream } from "fs";
 
 export const config = {
@@ -22,10 +23,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
           const stream = createReadStream(files.file.path);
 
+          //* 파일 이름
+          const originalFileName = files.file.name.split(".").shift();
+          //* 확장자
+          const fileExtension = files.file.name.split(".").pop();
+
           await s3
             .upload({
               Bucket: process.env.S3_BUCKET_NAME!,
-              Key: files.file.name,
+              Key: `${originalFileName}__${uuidv4()}.${fileExtension}`,
               ACL: "public-read",
               Body: stream,
             })
