@@ -139,6 +139,13 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
     el.click();
   };
 
+  //* 사진 삭제하기
+  const deletePhoto = (index: number) => {
+    const newPhotos = [...photos];
+    newPhotos.splice(index, 1);
+    dispatch(registerRoomActions.setPhotos(newPhotos));
+  };
+
   return (
     <Container>
       {photos.map((photo, index) => (
@@ -147,7 +154,12 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
             <li className="register-room-first-photo-wrapper">
               <img src={photo} alt="" />
               <div className="register-room-photo-interaction-buttons">
-                <button type="button" onClick={() => {}}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    deletePhoto(index);
+                  }}
+                >
                   <TrashCanIcon />
                 </button>
                 <button type="button" onClick={() => {}}>
