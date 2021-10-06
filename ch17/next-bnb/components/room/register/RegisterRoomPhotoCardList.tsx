@@ -146,6 +146,27 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
     dispatch(registerRoomActions.setPhotos(newPhotos));
   };
 
+  //* 사진 수정하기
+  const editPhoto = (index: number) => {
+    const el = document.createElement("input");
+    el.type = "file";
+    el.onchange = (event) => {
+      const file = (event.target as HTMLInputElement)?.files?.[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        uploadFileAPI(formData)
+          .then(({ data }) => {
+            const newPhotos = [...photos];
+            newPhotos[index] = data;
+            dispatch(registerRoomActions.setPhotos(newPhotos));
+          })
+          .catch((e) => console.log(e.message));
+      }
+    };
+    el.click();
+  };
+
   return (
     <Container>
       {photos.map((photo, index) => (
@@ -162,7 +183,12 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
                 >
                   <TrashCanIcon />
                 </button>
-                <button type="button" onClick={() => {}}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    editPhoto(index);
+                  }}
+                >
                   <PencilIcon />
                 </button>
               </div>
@@ -172,10 +198,20 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
             <li className="register-room-photo-card">
               <img src={photo} alt="" />
               <div className="register-room-photo-interaction-buttons">
-                <button type="button" onClick={() => {}}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    deletePhoto(index);
+                  }}
+                >
                   <TrashCanIcon />
                 </button>
-                <button type="button" onClick={() => {}}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    editPhoto(index);
+                  }}
+                >
                   <PencilIcon />
                 </button>
               </div>
