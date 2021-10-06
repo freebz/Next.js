@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { uploadFileAPI } from "../../../lib/api/file";
+import { registerRoomActions } from "../../../store/registerRoom";
 
 import PencilIcon from "../../../public/static/svg/register/photo/pencil.svg";
 import TrashCanIcon from "../../../public/static/svg/register/photo/trash_can.svg";
@@ -112,6 +115,30 @@ interface IProps {
 }
 
 const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
+  const dispatch = useDispatch();
+
+  //* 사진 추가하기
+  const addPhoto = () => {
+    const el = document.createElement("input");
+    el.type = "file";
+    el.accept = "image/*";
+    el.onchange = (event) => {
+      const { files } = event.target as HTMLInputElement;
+      if (files && files.length > 0) {
+        const file = files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        uploadFileAPI(formData)
+          .then(({ data }) => {
+            dispatch(registerRoomActions.setPhotos([...photos, data]));
+          })
+          .catch((e) => console.log(e));
+      }
+    };
+
+    el.click();
+  };
+
   return (
     <Container>
       {photos.map((photo, index) => (
@@ -147,7 +174,7 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
       <li
         className="register-room-photo-card"
         role="presentation"
-        onClick={() => {}}
+        onClick={addPhoto}
       >
         <div className="register-room-add-more-photo-card">
           <GrayPlusIcon />
