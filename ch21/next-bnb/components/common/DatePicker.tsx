@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import ko from "date-fns/locale/ko";
+import addHours from "date-fns/addHours";
 import palette from "../../styles/palette";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -110,10 +111,21 @@ const Container = styled.div`
   }
 `;
 
-const DatePicker: React.FC<ReactDatePickerProps> = ({ ...props }) => {
+const DatePicker: React.FC<ReactDatePickerProps> = ({ onChange, ...props }) => {
   return (
     <Container>
-      <ReactDatePicker {...props} disabledKeyboardNavigation locale={ko} />
+      <ReactDatePicker
+        {...props}
+        disabledKeyboardNavigation
+        locale={ko}
+        onChange={(date, event) => {
+          if (date) {
+            onChange(addHours(date as Date, 9), event);
+          } else {
+            onChange(null, event);
+          }
+        }}
+      />
     </Container>
   );
 };
