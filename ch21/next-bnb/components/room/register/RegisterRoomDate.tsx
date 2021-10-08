@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import palette from "../../../styles/palette";
+import DatePicker from "../../common/DatePicker";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
