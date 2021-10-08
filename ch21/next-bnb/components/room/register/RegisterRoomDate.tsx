@@ -56,6 +56,9 @@ const RegisterRoomDate: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const dateStartDate = startDate ? new Date(startDate) : null;
+  const dateEndDate = endDate ? new Date(endDate) : null;
+
   //* 예약 시작 날짜 변경 시
   const onChangeStartDate = (date: Date | null) => {
     console.log(date);
@@ -80,6 +83,11 @@ const RegisterRoomDate: React.FC = () => {
             <DatePicker
               selected={startDate ? new Date(startDate) : null}
               onChange={onChangeStartDate}
+              monthsShown={2}
+              selectsStart
+              startDate={dateStartDate}
+              endDate={dateEndDate}
+              minDate={new Date()}
             />
           </label>
         </div>
@@ -90,6 +98,11 @@ const RegisterRoomDate: React.FC = () => {
             <DatePicker
               selected={endDate ? new Date(endDate) : null}
               onChange={onChangeEndDate}
+              monthsShown={2}
+              selectsEnd
+              startDate={dateStartDate}
+              endDate={dateEndDate}
+              minDate={dateStartDate}
             />
           </label>
         </div>
