@@ -86,7 +86,7 @@ const Container = styled.button<StyledButtonProps>`
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  color?: "dark_cyan" | "white";
+  color?: "dark_cyan" | "white" | "bittersweet";
   size?: "small" | "medium";
   width?: string;
   colorReverse?: boolean;
