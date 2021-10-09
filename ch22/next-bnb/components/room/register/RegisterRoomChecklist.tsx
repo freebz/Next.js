@@ -17,6 +17,40 @@ const Container = styled.div`
 const RegisterRoomChecklist: React.FC = () => {
   const registerRoom = useSelector((state) => state.registerRoom);
 
+  //* 숙소 유형이 활성화됐는지
+  const isBuildingTypeActived = () => {
+    const {
+      largeBuildingType,
+      buildingType,
+      roomType,
+      isSetUpForGuest,
+    } = registerRoom;
+    if (!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest) {
+      return false;
+    }
+    return true;
+  };
+
+  //* 숙소 종류가 활성화됐는지
+  const isRoomTypeActived = useMemo(() => {
+    const {
+      maximumGuestCount,
+      bedroomCount,
+      bedCount,
+      bedList,
+      publicBedList,
+    } = registerRoom;
+    if (
+      !isBuildingTypeActived ||
+      !maximumGuestCount ||
+      !bedroomCount ||
+      !bedCount
+    ) {
+      return false;
+    }
+    return true;
+  }, []);
+
   return (
     <Container>
       <p className="register-room-checklist-info">
