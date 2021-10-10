@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { searchPlacesAPI } from "../../../lib/api/map";
 import { useSelector } from "../../../store";
 import { searchRoomActions } from "../../../store/searchRoom";
 
@@ -69,6 +70,23 @@ const Container = styled.div`
 const SearchRoomBarLocation: React.FC = () => {
   const location = useSelector((state) => state.searchRoom.location);
   const [popupOpened, setPopupOpened] = useState(false);
+
+  //* 장소 검색 하기
+  const searchPlaces = async () => {
+    try {
+      const { data } = await searchPlacesAPI(encodeURI(location));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //* 검색어가 변하면 장소를 검색
+  useEffect(() => {
+    if (location) {
+      //* 장소 검색하기
+      searchPlaces();
+    }
+  }, [location]);
 
   const dispatch = useDispatch();
 
