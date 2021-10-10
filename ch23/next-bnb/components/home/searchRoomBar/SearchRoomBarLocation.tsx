@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { useRef, useState, useEffect } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
@@ -71,10 +72,19 @@ const SearchRoomBarLocation: React.FC = () => {
   const location = useSelector((state) => state.searchRoom.location);
   const [popupOpened, setPopupOpened] = useState(false);
 
+  //* 검색 결과
+  const [results, setResults] = useState<
+    {
+      description: string;
+      placeId: string;
+    }[]
+  >([]);
+
   //* 장소 검색 하기
   const searchPlaces = async () => {
     try {
       const { data } = await searchPlacesAPI(encodeURI(location));
+      setResults(data);
     } catch (e) {
       console.log(e);
     }
@@ -115,9 +125,14 @@ const SearchRoomBarLocation: React.FC = () => {
             ref={inputRef}
           />
         </div>
-        {popupOpened && (
+        {popupOpened && location !== "근처 추천 장소" && (
           <ul className="search-room-bar-location-results">
-            <li>근처 추천 장소</li>
+            {!location && <li>근처 추천 장소</li>}
+            {!isEmpty(results) &&
+              results.map((result, index) => (
+                <li key={index}>{result.description}</li>
+              ))}
+            {location && isEmpty(results) && <li>검색 결과가 없습니다.</li>}
           </ul>
         )}
       </OutsideClickHandler>
