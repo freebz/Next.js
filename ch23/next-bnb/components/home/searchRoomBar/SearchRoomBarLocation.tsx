@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -68,6 +68,7 @@ const Container = styled.div`
 
 const SearchRoomBarLocation: React.FC = () => {
   const location = useSelector((state) => state.searchRoom.location);
+  const [popupOpened, setPopupOpened] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -75,9 +76,13 @@ const SearchRoomBarLocation: React.FC = () => {
   const setLocationDispatch = (value: string) => {
     dispatch(searchRoomActions.setLocation(value));
   };
-  const [popupOpened, setPopupOpened] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onClickInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     setPopupOpened(true);
   };
   return (
@@ -89,6 +94,7 @@ const SearchRoomBarLocation: React.FC = () => {
             value={location}
             onChange={(e) => setLocationDispatch(e.target.value)}
             placeholder="어디로 여행 가세요?"
+            ref={inputRef}
           />
         </div>
         {popupOpened && (
