@@ -43,7 +43,7 @@ const searchRoom = createSlice({
       return state;
     },
     //* 유아 수 변경하기
-    setInfants(state, action: PayloadAction<number>) {
+    setInfantsCount(state, action: PayloadAction<number>) {
       state.infantsCount = action.payload;
       return state;
     },
