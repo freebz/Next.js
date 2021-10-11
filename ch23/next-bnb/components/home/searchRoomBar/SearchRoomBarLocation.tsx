@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { searchPlacesAPI } from "../../../lib/api/map";
+import { searchPlacesAPI, getPlaceAPI } from "../../../lib/api/map";
 import { useSelector } from "../../../store";
 import { searchRoomActions } from "../../../store/searchRoom";
 import useDebounce from "../../../hooks/useDebounce";
@@ -110,6 +110,44 @@ const SearchRoomBarLocation: React.FC = () => {
     dispatch(searchRoomActions.setLocation(value));
   };
 
+  //* 위도 변경 Dispatch
+  const setLatitudeDispatch = (value: number) => {
+    dispatch(searchRoomActions.setLatitude(value));
+  };
+
+  //* 경도 변경 Dispatch
+  const setLongitudeDispatch = (value: number) => {
+    dispatch(searchRoomActions.setLongitude(value));
+  };
+
+  //* 근처 추천 장소 클릭 시
+  const onClickNearPlaces = () => {
+    setPopupOpened(false);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setLocationDispatch("근처 추천 장소");
+        setLatitudeDispatch(coords.latitude);
+        setLongitudeDispatch(coords.longitude);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+  };
+
+  //* 검색된 장소 클릭 시
+  const onClickRessult = async (placeId: string) => {
+    try {
+      const { data } = await getPlaceAPI(placeId);
+      setLocationDispatch(data.location);
+      setLatitudeDispatch(data.latitude);
+      setLongitudeDispatch(data.longitude);
+      setPopupOpened(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onClickInput = () => {
@@ -118,6 +156,7 @@ const SearchRoomBarLocation: React.FC = () => {
     }
     setPopupOpened(true);
   };
+
   return (
     <Container onClick={onClickInput}>
       <OutsideClickHandler onOutsideClick={() => setPopupOpened(false)}>
@@ -132,7 +171,11 @@ const SearchRoomBarLocation: React.FC = () => {
         </div>
         {popupOpened && location !== "근처 추천 장소" && (
           <ul className="search-room-bar-location-results">
-            {!location && <li>근처 추천 장소</li>}
+            {!location && (
+              <li role="presentation" onClick={onClickNearPlaces}>
+                근처 추천 장소
+              </li>
+            )}
             {!isEmpty(results) &&
               results.map((result, index) => (
                 <li key={index}>{result.description}</li>
