@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { searchPlacesAPI } from "../../../lib/api/map";
 import { useSelector } from "../../../store";
 import { searchRoomActions } from "../../../store/searchRoom";
+import useDebounce from "../../../hooks/useDebounce";
 
 import palette from "../../../styles/palette";
 
@@ -80,6 +81,8 @@ const SearchRoomBarLocation: React.FC = () => {
     }[]
   >([]);
 
+  const searchKeyword = useDebounce(location, 150);
+
   //* 장소 검색 하기
   const searchPlaces = async () => {
     try {
@@ -92,11 +95,13 @@ const SearchRoomBarLocation: React.FC = () => {
 
   //* 검색어가 변하면 장소를 검색
   useEffect(() => {
-    if (location) {
-      //* 장소 검색하기
+    if (!searchKeyword) {
+      setResults([]);
+    }
+    if (searchKeyword) {
       searchPlaces();
     }
-  }, [location]);
+  }, [searchKeyword]);
 
   const dispatch = useDispatch();
 
