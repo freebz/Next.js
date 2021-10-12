@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BedType, RegisterRoomState } from "../types/room";
+import { RegisterRoomState } from "../types/reduxState";
+import { BedType } from "../types/room";
 
 //* 초기 상태
 const initialState: RegisterRoomState = {

@@ -1,3 +1,5 @@
+import { UserType } from "./user";
+
 //* 침대 유형
 export type BedType =
   | "다른 침대 추가"
@@ -14,6 +16,7 @@ export type BedType =
   | "해먹"
   | "물침대";
 
+//* 저장 된 숙소 타입
 export type StoredRoomType = {
   id: number;
   largeBuildingType: string | null;
@@ -50,7 +53,9 @@ export type StoredRoomType = {
   hostId: number;
 };
 
-export type RegisterRoomState = {
+//* 숙소 타입
+export type RoomType = {
+  id: number;
   largeBuildingType: string | null;
   buildingType: string | null;
   roomType: string | null;
@@ -61,21 +66,24 @@ export type RegisterRoomState = {
   bedList: { id: number; beds: { type: BedType; count: number }[] }[];
   publicBedList: { type: BedType; count: number }[];
   bathroomCount: number;
-  bathroomType: "private" | "public" | null;
+  bathroomType: "private" | "public";
+  latitude: number;
+  longitude: number;
   country: string;
   city: string;
   district: string;
   streetAddress: string;
   detailAddress: string;
   postcode: string;
-  latitude: number;
-  longitude: number;
   amentities: string[];
   conveniences: string[];
   photos: string[];
   description: string;
   title: string;
-  price: number;
-  startDate: string | null;
-  endDate: string | null;
+  price: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
+  host: UserType;
 };
