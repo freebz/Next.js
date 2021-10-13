@@ -1,11 +1,13 @@
 import React, { useState, useMemo, useRef } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import styled from "styled-components";
-import DatePicker from "../../common/DatePicker";
 import palette from "../../../styles/palette";
-import Button from "../../common/Button";
 import { useSelector } from "../../../store";
+import useModal from "../../../hooks/useModal";
+import DatePicker from "../../common/DatePicker";
 import Counter from "../../common/Counter";
+import Button from "../../common/Button";
+import AuthModal from "../../auth/AuthModal";
 
 const Container = styled.div`
   position: sticky;
@@ -153,6 +155,9 @@ const RoomDetailReservation: React.FC = () => {
   }
 
   const price = useSelector((state) => state.room.detail?.price);
+  const userId = useSelector((state) => state.user.id);
+
+  const { openModal, ModalPortal, closeModal } = useModal();
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -176,6 +181,9 @@ const RoomDetailReservation: React.FC = () => {
 
   //* 에약하기 클릭 시
   const onClickReservationButton = async () => {
+    if (!userId) {
+      openModal();
+    }
     if (checkInRef.current && !startDate) {
       checkInRef.current.focus();
     } else if (checkOutRef.current && !endDate) {
@@ -283,6 +291,9 @@ const RoomDetailReservation: React.FC = () => {
           </p>
         </>
       )}
+      <ModalPortal>
+        <AuthModal closeModal={closeModal} />
+      </ModalPortal>
     </Container>
   );
 };
