@@ -154,7 +154,7 @@ const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
       case "public":
         return "공용";
       default:
-        return "";        
+        return "";
     }
   }, []);
   return (
