@@ -21,6 +21,34 @@ const Container = styled.div`
       left: 0;
     }
   }
+  .room-detail-photos-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+  }
+  .room-detail-three-photos-first {
+    position: relative;
+    margin-right: 8px;
+    width: 66.66.%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .room-detail-three-photos-second {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    width: 33.33%;
+    img {
+      height: calc((100% - 8px) / 2);
+    }
+  }
 `;
 
 const RoomDetailPhotos: React.FC = () => {
@@ -34,6 +62,21 @@ const RoomDetailPhotos: React.FC = () => {
       <Container>
         <div className="room-detail-one-photo">
           <img src={photos[0]} alt={roomTitle} />
+        </div>
+      </Container>
+    );
+  }
+  if (photos.length < 4) {
+    return (
+      <Container>
+        <div className="room-detail-photos-wrapper">
+          <div className="room-detail-three-photos-first">
+            <img src={photos[0]} alt={roomTitle} />
+          </div>
+          <div className="room-detail-three-photos-second">
+            <img src={photos[1]} alt={roomTitle} />
+            <img src={photos[2]} alt={roomTitle} />
+          </div>
         </div>
       </Container>
     );
