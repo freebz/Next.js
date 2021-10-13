@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "../../../store";
 import palette from "../../../styles/palette";
+import RoomDetailPhotos from "./RoomDetailPhotos";
 
 const Container = styled.div`
   width: 1120px;
@@ -36,6 +37,7 @@ const RoomDetail: React.FC = () => {
       <p className="room-detail-location">
         {room.district}, {room.city}, {room.country}
       </p>
+      <RoomDetailPhotos />
     </Container>
   );
 };
