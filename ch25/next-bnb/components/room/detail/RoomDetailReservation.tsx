@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useMemo, useRef } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
 import styled from "styled-components";
 import DatePicker from "../../common/DatePicker";
 import palette from "../../../styles/palette";
 import Button from "../../common/Button";
 import { useSelector } from "../../../store";
+import Counter from "../../common/Counter";
 
 const Container = styled.div`
   position: sticky;
@@ -153,6 +155,20 @@ const RoomDetailReservation: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
+  const [adultCount, setAdultCount] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
+  const [infantsCount, setInfantsCount] = useState(0);
+
+  const [guestCountPopupOpened, setGuestCountPopupOpened] = useState(false);
+
+  const getGuestCountText = useMemo(
+    () =>
+      `게스트 ${adultCount + childrenCount}명${
+        infantsCount ? `, 유아 ${infantsCount}명` : ""
+      }`,
+    [adultCount, childrenCount, infantsCount]
+  );
+
   const checkInRef = useRef<HTMLLabelElement>(null);
   const checkOutRef = useRef<HTMLLabelElement>(null);
 
@@ -208,10 +224,42 @@ const RoomDetailReservation: React.FC = () => {
           </div>
         </div>
         <div className="room-detail-reservation-guests-count-wrapper">
-          <div className="room-detail-reservation-guests-count">
-            <span>인원</span>
-            <p>게스트 1명</p>
-          </div>
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setGuestCountPopupOpened(false);
+            }}
+          >
+            <div
+              role="presentation"
+              className="room-detail-reservation-guests-count"
+              onClick={() => setGuestCountPopupOpened(!guestCountPopupOpened)}
+            >
+              <span>인원</span>
+              <p>{getGuestCountText}</p>
+            </div>
+            {guestCountPopupOpened && (
+              <div className="room-detail-reservation-guests-popup">
+                <div className="mb-24">
+                  <Counter
+                    label="성인"
+                    description="만 13세 이상"
+                    minValue={1}
+                    value={adultCount}
+                    onChange={(count) => setAdultCount(count)}
+                  />
+                </div>
+                <Counter
+                  label="유아"
+                  description="2세 미만"
+                  value={infantsCount}
+                  onChange={(count) => setInfantsCount(count)}
+                />
+                <p className="room-detail-reservation-guests-info">
+                  최대 {room.maximumGuestCount}명, 유아는 숙박 인원에 포함되지 않습니다.
+                </p>
+              </div>
+            )}
+          </OutsideClickHandler>
         </div>
       </div>
       <Button color="amaranth" width="100%" onClick={onClickReservationButton}>
