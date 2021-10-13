@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import DatePicker from "../../common/DatePicker";
 import palette from "../../../styles/palette";
@@ -153,6 +153,18 @@ const RoomDetailReservation: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
+  const checkInRef = useRef<HTMLLabelElement>(null);
+  const checkOutRef = useRef<HTMLLabelElement>(null);
+
+  //* 에약하기 클릭 시
+  const onClickReservationButton = async () => {
+    if (checkInRef.current && !startDate) {
+      checkInRef.current.focus();
+    } else if (checkOutRef.current && !endDate) {
+      checkOutRef.current.focus();
+    }
+  };
+
   return (
     <Container>
       <p className="room-detail-reservation-info">
@@ -161,7 +173,7 @@ const RoomDetailReservation: React.FC = () => {
       <div className="room-detail-reservation-inputs">
         <div className="rooom-detail-reservation-date-inputs">
           <div className="room-detail-reservation-check-in">
-            <label>
+            <label ref={checkInRef}>
               체크인
               <DatePicker
                 placeholderText="날짜 추가"
@@ -178,7 +190,7 @@ const RoomDetailReservation: React.FC = () => {
             </label>
           </div>
           <div className="room-detail-reservation-check-out">
-            <label>
+            <label ref={checkOutRef}>
               체크아웃
               <DatePicker
                 placeholderText="날짜 추가"
@@ -202,8 +214,8 @@ const RoomDetailReservation: React.FC = () => {
           </div>
         </div>
       </div>
-      <Button color="amaranth" width="100%" onClick={() => {}}>
-        예약하기
+      <Button color="amaranth" width="100%" onClick={onClickReservationButton}>
+        {startDate && endDate ? "예약하기" : "예약 가능 여부 보기"}
       </Button>
     </Container>
   );
