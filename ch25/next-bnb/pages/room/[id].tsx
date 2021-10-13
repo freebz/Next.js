@@ -20,3 +20,5 @@ roomDetail.getInitialProps = async ({ query, store }) => {
   }
   return {};
 };
+
+export default roomDetail;

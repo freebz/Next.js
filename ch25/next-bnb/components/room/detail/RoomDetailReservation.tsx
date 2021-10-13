@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import DatePicker from "../../common/DatePicker";
 import palette from "../../../styles/palette";
@@ -150,6 +150,9 @@ const RoomDetailReservation: React.FC = () => {
     return null;
   }
 
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
   return (
     <Container>
       <p className="room-detail-reservation-info">
@@ -163,8 +166,14 @@ const RoomDetailReservation: React.FC = () => {
               <DatePicker
                 placeholderText="날짜 추가"
                 popperPlacement="top-end"
-                disabledKeyboardNavigation
-                onChange={() => {}}
+                selected={startDate}
+                onChange={(date) => setStartDate(date as Date)}
+                openToDate={new Date()}
+                selectsStart
+                startDate={startDate as Date}
+                endDate={new Date(endDate as Date)}
+                minDate={new Date(room.startDate)}
+                maxDate={new Date(room.endDate)}
               />
             </label>
           </div>
@@ -174,8 +183,14 @@ const RoomDetailReservation: React.FC = () => {
               <DatePicker
                 placeholderText="날짜 추가"
                 popperPlacement="top-end"
-                disabledKeyboardNavigation
-                onChange={() => {}}
+                selected={endDate}
+                onChange={(date) => setEndDate(date as Date)}
+                selectsEnd
+                openToDate={new Date()}
+                startDate={startDate as Date}
+                endDate={new Date(endDate as Date)}
+                minDate={new Date(startDate as Date)}
+                maxDate={new Date(room.endDate)}
               />
             </label>
           </div>
