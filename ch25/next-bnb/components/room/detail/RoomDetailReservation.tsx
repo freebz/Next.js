@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
@@ -168,6 +169,8 @@ const RoomDetailReservation: React.FC = () => {
 
   const [guestCountPopupOpened, setGuestCountPopupOpened] = useState(false);
 
+  const router = useRouter();
+
   const getGuestCountText = useMemo(
     () =>
       `게스트 ${adultCount + childrenCount}명${
@@ -183,11 +186,27 @@ const RoomDetailReservation: React.FC = () => {
   const onClickReservationButton = async () => {
     if (!userId) {
       openModal();
-    }
-    if (checkInRef.current && !startDate) {
+    } else if (checkInRef.current && !startDate) {
       checkInRef.current.focus();
     } else if (checkOutRef.current && !endDate) {
       checkOutRef.current.focus();
+    } else {
+      try {
+        const body = {
+          roomId: room.id,
+          userId,
+          checkInDate: startDate!.toISOString(),
+          checkOutDate: endDate!.toISOString(),
+          adultCount,
+          childrenCount,
+          infantsCount,
+        };
+        await makeReservationAPI(body);
+        alert("숙소 등록을 완료하였습니다.");
+        router.push("/");
+      } catch(e) {
+        console.log(e);
+      }
     }
   };
 
